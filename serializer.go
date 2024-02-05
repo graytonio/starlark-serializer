@@ -33,6 +33,10 @@ func marshalStruct(v any) (*starlark.Dict, error) {
 	results := starlark.NewDict(val.NumField())
 
 	for i := 0; i < val.NumField(); i++ {
+		if !val.Field(i).CanInterface() {
+			continue
+		}
+
 		key := strings.ToLower(val.Type().Field(i).Name)
 		value, err := Marshal(val.Field(i).Interface())
 		if err != nil {

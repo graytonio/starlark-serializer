@@ -167,12 +167,14 @@ func TestMarshalSimpleStructPointer(t *testing.T) {
 		Foo string
 		Bar int
 		Baz bool
+		unexport string
 	}
 
 	input := testStruct{
 		Foo: "test",
 		Bar: 12,
 		Baz: true,
+		unexport: "test",
 	}
 
 	output, err := starlarkserializer.Marshal(&input)
