@@ -19,6 +19,8 @@ func Marshal(i any) (starlark.Value, error) {
 		return starlark.MakeInt(i.(int)), nil
 	case reflect.Bool:
 		return starlark.Bool(i.(bool)), nil
+	case reflect.Pointer:
+		return marshalStruct(reflect.Indirect(reflect.ValueOf(i)).Interface())
 	case reflect.Struct:
 		return marshalStruct(i)
 	default:

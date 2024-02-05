@@ -160,3 +160,41 @@ func TestMarshalSimpleStruct(t *testing.T) {
 
 	}
 }
+
+
+func TestMarshalSimpleStructPointer(t *testing.T) {
+	type testStruct struct {
+		Foo string
+		Bar int
+		Baz bool
+	}
+
+	input := testStruct{
+		Foo: "test",
+		Bar: 12,
+		Baz: true,
+	}
+
+	output, err := starlarkserializer.Marshal(&input)
+	if assert.NoError(t, err) {
+		assert.IsType(t, &starlark.Dict{}, output)
+
+		dict := output.(*starlark.Dict)
+
+		foo, _, err := dict.Get(starlark.String("foo"))
+		if assert.NoError(t, err) {
+			assert.Equal(t, starlark.String("test"), foo)
+		}
+
+		bar, _, err := dict.Get(starlark.String("bar"))
+		if assert.NoError(t, err) {
+			assert.Equal(t, starlark.MakeInt(12), bar)
+		}
+
+		baz, _, err := dict.Get(starlark.String("baz"))
+		if assert.NoError(t, err) {
+			assert.Equal(t, starlark.Bool(true), baz)
+		}
+
+	}
+}
