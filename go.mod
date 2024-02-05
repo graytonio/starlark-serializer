@@ -3,7 +3,6 @@ module github.com/graytonio/starlark-serializer
 go 1.21.6
 
 require (
-	github.com/magiconair/properties v1.8.7
 	github.com/stretchr/testify v1.8.4
 	go.starlark.net v0.0.0-20240123142251-f86470692795
 )
